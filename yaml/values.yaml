@@ -1,0 +1,12 @@
+gang:
+    configName: gang-cm 
+    configNamespace: default
+    dataName: gangMember
+    
+  gangMember: 5
+  
+  image:
+    repository: test/gang
+    tag: latest
+    pullPolicy: Never
+  
