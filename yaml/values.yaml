@@ -3,10 +3,12 @@ gang:
     configNamespace: default
     dataName: gangMember
     
-  gangMember: 5
+gangMember: 5
   
-  image:
-    repository: test/gang
-    tag: latest
-    pullPolicy: Never
+image:
+  repository: test/gang
+  tag: latest
+  pullPolicy: Never
+
+serviceName: gang
   

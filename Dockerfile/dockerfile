@@ -1,4 +1,0 @@
-FROM golang:1.15.2
-WORKDIR /test/main
-ADD . /test/main
-COPY config /root/.kube/
