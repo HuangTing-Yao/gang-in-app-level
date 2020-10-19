@@ -1,19 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: gang04
+  name: gang
 spec:
   completions: 20
   parallelism: 20
   template:
     spec:
       containers:
-      - name: gang04
+      - name: gang
         image: gang:latest
         imagePullPolicy: Never
         env:
         - name: jobName
-          value: gangtest-004
+          value: gangtest
         - name: serviceName
           value: gangservice
         - name: memberAmount
