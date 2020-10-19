@@ -14,7 +14,7 @@ kind: Service
 metadata:
   name: gangservice
   labels:
-    app:gang
+    app: gang
 spec:
   selector:
     app: gang
