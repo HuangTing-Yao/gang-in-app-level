@@ -1,5 +1,0 @@
-apiVersion: v1
-appVersion: "latest"
-description: gang in application level
-name: gang-example
-version: latest

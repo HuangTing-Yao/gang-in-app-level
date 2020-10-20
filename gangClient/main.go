@@ -15,6 +15,7 @@ func main() {
 	jobName := os.Getenv("jobName")
 	serviceName := os.Getenv("serviceName")
 	memberAmount, _ := strconv.Atoi(os.Getenv("memberAmount"))
+	runtimeMin, _ := strconv.Atoi(os.Getenv("runtimeMin"))
 	serviceName = strings.ToUpper(serviceName) + "_SERVICE_HOST"
 	serviceIP := os.Getenv(serviceName)
 	// flag.Parse()
@@ -25,7 +26,7 @@ func main() {
 		if number >= memberAmount {
 			fmt.Println("satisfy gang minMember.")
 			fmt.Println("start to run job.")
-			time.Sleep(60 * time.Second) // means the application start running job
+			time.Sleep(time.Duration(runtimeMin) * time.Minute) // means the application start running job
 			break
 		}
 		time.Sleep(2 * time.Second)

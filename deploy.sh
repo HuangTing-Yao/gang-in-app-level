@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 
-# deploy.sh <jobNumber>
+# deploy.sh <job amount> <pod amount> <gang member> <job run time(min)>
 set -o errexit
 set -o nounset
 set -o pipefail
 
-JOBNUMBER=$1
+JOBAMOUNT=$1
+PODAMOUNT=$2
+GANGMEMBER=$3
+RUNTIMEMIN=$4
 
 # create service
 kubectl create -f <(cat << EOF
@@ -23,7 +26,7 @@ spec:
   - protocol: TCP
     port: 8863
     targetPort: 8863
-EOF)
+EOF) 
 
 # create job counter web server
 kubectl create -f <(cat << EOF
@@ -50,15 +53,17 @@ until grep 'Running' <(kubectl get pod gangweb -o=jsonpath='{.status.phase}'); d
 done
 
 # create gang jobs
-for i in $(seq "$JOBNUMBER"); do
+for i in $(seq "$JOBAMOUNT"); do
   kubectl create -f <(cat << EOF
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: gang-job-$i
+  labels: 
+    app: gang
 spec:
-  completions: 20
-  parallelism: 20
+  completions: $PODAMOUNT
+  parallelism: $PODAMOUNT
   template:
     spec:
       containers:
@@ -71,7 +76,9 @@ spec:
         - name: serviceName
           value: gangservice
         - name: memberAmount
-          value: "20"
+          value: "$GANGMEMBER"
+        - name: runtimeMin
+          value: "$RUNTIMEMIN"
         command: ["go"]
         args: ["run", "gang"]
       restartPolicy: Never
